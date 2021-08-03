@@ -6,7 +6,7 @@ import (
 	"github.com/ozoncp/ocp-vacancy-api/internal/utils"
 )
 
-// FLusher is an interface to flush Vacancies into Vacancies repo
+// Flusher is an interface to flush Vacancies into Vacancies repo
 type Flusher interface {
 	Flush(vacancies []models.Vacancy) []models.Vacancy
 }
