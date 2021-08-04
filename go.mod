@@ -3,6 +3,9 @@ module github.com/ozoncp/ocp-vacancy-api
 go 1.16
 
 require (
+	github.com/golang/mock v1.6.0
+	github.com/onsi/ginkgo v1.16.4
+	github.com/onsi/gomega v1.14.0
 	github.com/pkg/errors v0.9.1
-	github.com/stretchr/testify v1.7.0 // indirect
+	github.com/stretchr/testify v1.7.0
 )
