@@ -20,7 +20,7 @@ func NewSaver(capacity uint, flusher flusher.Flusher, flushInterval time.Duratio
 
 	s := &saver{
 		flusher: flusher,
-		doneCh:  make(chan bool),
+		doneCh:  make(chan struct{}),
 		mu:      sync.RWMutex{},
 		storage: make([]models.Vacancy, 0, capacity),
 	}
@@ -45,7 +45,7 @@ func NewSaver(capacity uint, flusher flusher.Flusher, flushInterval time.Duratio
 
 type saver struct {
 	flusher flusher.Flusher
-	doneCh  chan bool
+	doneCh  chan struct{}
 
 	mu      sync.RWMutex
 	storage []models.Vacancy
@@ -62,7 +62,7 @@ func (s *saver) Save(vacancy models.Vacancy) {
 // Close gracefully stops Saver, closing all its resources.
 // This will also cause flush of vacancies of the Saver's internal storage if there are any
 func (s *saver) Close() {
-	s.doneCh <- true
+	s.doneCh <- struct{}{}
 }
 
 // flush is a helper method to call Saver's Flusher.
@@ -72,7 +72,9 @@ func (s *saver) flush() {
 
 	notFlushedVacanices := s.flusher.Flush(s.storage)
 	if len(notFlushedVacanices) > 0 {
-		// TODO: Unclear what to de here
+		s.storage = notFlushedVacanices
+		// TODO: probably, need to log this case
+	} else {
+		s.storage = s.storage[:0] // clean the slice keeping underlying array to avoid memory allocation
 	}
-	s.storage = s.storage[:0] // clean the slice keeping underlying array to avoid memory allocation
 }

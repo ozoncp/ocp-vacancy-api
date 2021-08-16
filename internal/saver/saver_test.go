@@ -27,7 +27,7 @@ var _ = Describe("Saver", func() {
 
 		mockFlusher = mocks.NewMockFlusher(ctrl)
 
-		s = saver.NewSaver(10, mockFlusher, 10*time.Millisecond)
+		s = saver.NewSaver(10, mockFlusher, 100*time.Millisecond)
 	})
 
 	AfterEach(func() {
@@ -42,7 +42,7 @@ var _ = Describe("Saver", func() {
 
 			s.Save(models.Vacancy{})
 			s.Close()
-			time.Sleep(50 * time.Millisecond) // sleep for 50ms to guarantee s.flush call
+			time.Sleep(10 * time.Millisecond) // sleep for 10ms to guarantee s.flush call after s.Close
 		})
 	})
 })
