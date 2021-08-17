@@ -34,5 +34,5 @@ RUN apk --no-cache add ca-certificates
 WORKDIR /root/
 COPY --from=builder /home/developer/go/src/github.com/ozoncp/ocp-vacancy-api/bin/ocp-vacancy-api .
 RUN chown root:root ocp-vacancy-api
-EXPOSE 82 8081
+EXPOSE 8081 8082
 CMD ["./ocp-vacancy-api"]

@@ -11,12 +11,13 @@ build: vendor-proto .generate .build
 				--grpc-gateway_out=pkg/ocp-vacancy-api \
 				--grpc-gateway_opt=logtostderr=true \
 				--grpc-gateway_opt=paths=import \
-				--validate_out lang=go:pkg/ocp-vacancy-api \
 				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
+				--validate_out lang=go:pkg/ocp-vacancy-api \
 				api/ocp-vacancy-api/ocp-vacancy-api.proto
 		mv pkg/ocp-vacancy-api/github.com/ozoncp/ocp-vacancy-api/pkg/ocp-vacancy-api/* pkg/ocp-vacancy-api/
 		rm -rf pkg/ocp-vacancy-api/github.com
 		mkdir -p cmd/ocp-vacancy-api
+		cd pkg/ocp-vacancy-api && ls go.mod || go mod init github.com/ozoncp/ocp-vacancy-api/pkg/ocp-vacancy-api && go mod tidy
 
 .PHONY: .build
 .build:
