@@ -1,0 +1,246 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "api/ocp-vacancy-api/ocp-vacancy-api.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/vacancies": {
+      "get": {
+        "summary": "ListVacanciesV1 returns all Vacancies",
+        "operationId": "OcpVacancyApi_ListVacanciesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiListVacanciesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "Limit",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "Offset",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
+      },
+      "post": {
+        "summary": "CreateVacancyV1 adds a Vacancy",
+        "operationId": "OcpVacancyApi_CreateVacancyV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiCreateVacancyV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiCreateVacancyV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
+      }
+    },
+    "/v1/vacancies/{ID}": {
+      "get": {
+        "summary": "DescribeVacancyV1 returns a Vacancy by ID",
+        "operationId": "OcpVacancyApi_DescribeVacancyV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiDescribeVacancyV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
+      },
+      "delete": {
+        "summary": "RemoveVacancyV1 deletes a Vacancy by ID",
+        "operationId": "OcpVacancyApi_RemoveVacancyV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiRemoveVacancyV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "ID",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "apiCreateVacancyV1Request": {
+      "type": "object",
+      "properties": {
+        "Link": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "apiCreateVacancyV1Response": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "apiDescribeVacancyV1Response": {
+      "type": "object",
+      "properties": {
+        "Vacancy": {
+          "$ref": "#/definitions/apiVacancyV1"
+        }
+      }
+    },
+    "apiListVacanciesV1Response": {
+      "type": "object",
+      "properties": {
+        "Vacancies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiVacancyV1"
+          }
+        }
+      }
+    },
+    "apiRemoveVacancyV1Response": {
+      "type": "object",
+      "properties": {
+        "Found": {
+          "type": "boolean"
+        }
+      }
+    },
+    "apiVacancyV1": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "Link": {
+          "type": "string"
+        },
+        "Status": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "runtimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
