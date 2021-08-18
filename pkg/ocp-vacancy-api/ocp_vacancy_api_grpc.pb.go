@@ -213,5 +213,5 @@ var OcpVacancyApi_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/ocp-vacancy-api/ocp-vacancy-api.proto",
+	Metadata: "api/ocp-vacancy-api/ocp_vacancy_api.proto",
 }

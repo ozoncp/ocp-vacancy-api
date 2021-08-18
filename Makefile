@@ -13,7 +13,7 @@ build: vendor-proto .generate .build
 				--grpc-gateway_opt=paths=import \
 				--swagger_out=allow_merge=true,merge_file_name=api:swagger \
 				--validate_out lang=go:pkg/ocp-vacancy-api \
-				api/ocp-vacancy-api/ocp-vacancy-api.proto
+				api/ocp-vacancy-api/ocp_vacancy_api.proto
 		mv pkg/ocp-vacancy-api/github.com/ozoncp/ocp-vacancy-api/pkg/ocp-vacancy-api/* pkg/ocp-vacancy-api/
 		rm -rf pkg/ocp-vacancy-api/github.com
 		mkdir -p cmd/ocp-vacancy-api
@@ -37,7 +37,7 @@ vendor-proto: .vendor-proto
 .vendor-proto:
 		mkdir -p vendor.protogen
 		mkdir -p vendor.protogen/api/ocp-vacancy-api
-		cp api/ocp-vacancy-api/ocp-vacancy-api.proto vendor.protogen/api/ocp-vacancy-api
+		cp api/ocp-vacancy-api/ocp_vacancy_api.proto vendor.protogen/api/ocp-vacancy-api
 		@if [ ! -d vendor.protogen/google ]; then \
 			git clone https://github.com/googleapis/googleapis vendor.protogen/googleapis &&\
 			mkdir -p  vendor.protogen/google/ &&\

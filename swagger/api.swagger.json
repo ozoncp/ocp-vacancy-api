@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "api/ocp-vacancy-api/ocp-vacancy-api.proto",
+    "title": "api/ocp-vacancy-api/ocp_vacancy_api.proto",
     "version": "version not set"
   },
   "consumes": [
