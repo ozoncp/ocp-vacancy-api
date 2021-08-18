@@ -78,15 +78,15 @@ func request_OcpVacancyApi_DescribeVacancyV1_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["ID"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.ID, err = runtime.Uint64(val)
+	protoReq.Id, err = runtime.Uint64(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := client.DescribeVacancyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -105,15 +105,15 @@ func local_request_OcpVacancyApi_DescribeVacancyV1_0(ctx context.Context, marsha
 		_   = err
 	)
 
-	val, ok = pathParams["ID"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.ID, err = runtime.Uint64(val)
+	protoReq.Id, err = runtime.Uint64(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := server.DescribeVacancyV1(ctx, &protoReq)
@@ -168,15 +168,15 @@ func request_OcpVacancyApi_RemoveVacancyV1_0(ctx context.Context, marshaler runt
 		_   = err
 	)
 
-	val, ok = pathParams["ID"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.ID, err = runtime.Uint64(val)
+	protoReq.Id, err = runtime.Uint64(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := client.RemoveVacancyV1(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -195,15 +195,15 @@ func local_request_OcpVacancyApi_RemoveVacancyV1_0(ctx context.Context, marshale
 		_   = err
 	)
 
-	val, ok = pathParams["ID"]
+	val, ok = pathParams["id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "id")
 	}
 
-	protoReq.ID, err = runtime.Uint64(val)
+	protoReq.Id, err = runtime.Uint64(val)
 
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
 
 	msg, err := server.RemoveVacancyV1(ctx, &protoReq)
@@ -436,11 +436,11 @@ func RegisterOcpVacancyApiHandlerClient(ctx context.Context, mux *runtime.ServeM
 var (
 	pattern_OcpVacancyApi_CreateVacancyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vacancies"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OcpVacancyApi_DescribeVacancyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "vacancies", "ID"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OcpVacancyApi_DescribeVacancyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "vacancies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_OcpVacancyApi_ListVacanciesV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "vacancies"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_OcpVacancyApi_RemoveVacancyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "vacancies", "ID"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_OcpVacancyApi_RemoveVacancyV1_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "vacancies", "id"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

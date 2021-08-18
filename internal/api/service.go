@@ -23,7 +23,7 @@ func (a *api) CreateVacancyV1(ctx context.Context, req *ocp_vacancy_api.CreateVa
 		Uint64("Status", req.Status).
 		Msg("create vacancy")
 
-	return &ocp_vacancy_api.CreateVacancyV1Response{ID: 1}, nil
+	return &ocp_vacancy_api.CreateVacancyV1Response{Id: 1}, nil
 }
 
 func (a *api) DescribeVacancyV1(ctx context.Context, req *ocp_vacancy_api.DescribeVacancyV1Request) (*ocp_vacancy_api.DescribeVacancyV1Response, error) {
@@ -32,12 +32,12 @@ func (a *api) DescribeVacancyV1(ctx context.Context, req *ocp_vacancy_api.Descri
 	}
 
 	log.Info().
-		Uint64("ID", req.ID).
+		Uint64("ID", req.Id).
 		Msg("get vacancy by id")
 
 	return &ocp_vacancy_api.DescribeVacancyV1Response{
 		Vacancy: &ocp_vacancy_api.VacancyV1{
-			ID:     req.ID,
+			Id:     req.Id,
 			Link:   "https://example.com",
 			Status: 0,
 		},
@@ -57,7 +57,7 @@ func (a *api) ListVacanciesV1(ctx context.Context, req *ocp_vacancy_api.ListVaca
 	return &ocp_vacancy_api.ListVacanciesV1Response{
 		Vacancies: []*ocp_vacancy_api.VacancyV1{
 			{
-				ID:     1,
+				Id:     1,
 				Link:   "https://example.com",
 				Status: 0,
 			},
@@ -71,7 +71,7 @@ func (a *api) RemoveVacancyV1(ctx context.Context, req *ocp_vacancy_api.RemoveVa
 	}
 
 	log.Info().
-		Uint64("ID", req.ID).
+		Uint64("ID", req.Id).
 		Msg("remove vacancy by id")
 
 	return &ocp_vacancy_api.RemoveVacancyV1Response{Found: false}, nil

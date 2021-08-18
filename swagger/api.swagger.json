@@ -31,14 +31,14 @@
         },
         "parameters": [
           {
-            "name": "Limit",
+            "name": "limit",
             "in": "query",
             "required": false,
             "type": "string",
             "format": "uint64"
           },
           {
-            "name": "Offset",
+            "name": "offset",
             "in": "query",
             "required": false,
             "type": "string",
@@ -81,7 +81,7 @@
         ]
       }
     },
-    "/v1/vacancies/{ID}": {
+    "/v1/vacancies/{id}": {
       "get": {
         "summary": "DescribeVacancyV1 returns a Vacancy by ID",
         "operationId": "OcpVacancyApi_DescribeVacancyV1",
@@ -101,7 +101,7 @@
         },
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
@@ -131,7 +131,7 @@
         },
         "parameters": [
           {
-            "name": "ID",
+            "name": "id",
             "in": "path",
             "required": true,
             "type": "string",
@@ -148,10 +148,10 @@
     "apiCreateVacancyV1Request": {
       "type": "object",
       "properties": {
-        "Link": {
+        "link": {
           "type": "string"
         },
-        "Status": {
+        "status": {
           "type": "string",
           "format": "uint64"
         }
@@ -160,7 +160,7 @@
     "apiCreateVacancyV1Response": {
       "type": "object",
       "properties": {
-        "ID": {
+        "id": {
           "type": "string",
           "format": "uint64"
         }
@@ -169,7 +169,7 @@
     "apiDescribeVacancyV1Response": {
       "type": "object",
       "properties": {
-        "Vacancy": {
+        "vacancy": {
           "$ref": "#/definitions/apiVacancyV1"
         }
       }
@@ -177,7 +177,7 @@
     "apiListVacanciesV1Response": {
       "type": "object",
       "properties": {
-        "Vacancies": {
+        "vacancies": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/apiVacancyV1"
@@ -188,7 +188,7 @@
     "apiRemoveVacancyV1Response": {
       "type": "object",
       "properties": {
-        "Found": {
+        "found": {
           "type": "boolean"
         }
       }
@@ -196,14 +196,14 @@
     "apiVacancyV1": {
       "type": "object",
       "properties": {
-        "ID": {
+        "id": {
           "type": "string",
           "format": "uint64"
         },
-        "Link": {
+        "link": {
           "type": "string"
         },
-        "Status": {
+        "status": {
           "type": "string",
           "format": "uint64"
         }

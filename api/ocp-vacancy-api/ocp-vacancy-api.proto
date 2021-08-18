@@ -20,7 +20,7 @@ service OcpVacancyApi {
     // DescribeVacancyV1 returns a Vacancy by ID
     rpc DescribeVacancyV1(DescribeVacancyV1Request) returns (DescribeVacancyV1Response) {
         option (google.api.http) = {
-            get: "/v1/vacancies/{ID}"
+            get: "/v1/vacancies/{id}"
         };
     }
 
@@ -34,48 +34,48 @@ service OcpVacancyApi {
     // RemoveVacancyV1 deletes a Vacancy by ID
     rpc RemoveVacancyV1(RemoveVacancyV1Request) returns (RemoveVacancyV1Response) {
         option (google.api.http) = {
-            delete: "/v1/vacancies/{ID}"
+            delete: "/v1/vacancies/{id}"
         };
     }
 }
 
 message VacancyV1 {
-    uint64 ID = 1;
-    string Link = 2;
-    uint64 Status = 3;
+    uint64 id = 1;
+    string link = 2;
+    uint64 status = 3;
 }
 
 message CreateVacancyV1Request {
-    string Link = 1 [(validate.rules).string.uri = true];
-    uint64 Status = 2 [(validate.rules).uint64.gte = 0];
+    string link = 1 [(validate.rules).string.uri = true];
+    uint64 status = 2 [(validate.rules).uint64.gte = 0];
 }
 
 message CreateVacancyV1Response {
-    uint64 ID = 1;
+    uint64 id = 1;
 }
 
 message DescribeVacancyV1Request {
-    uint64 ID = 1 [(validate.rules).uint64.gte = 0];
+    uint64 id = 1 [(validate.rules).uint64.gte = 0];
 }
 
 message DescribeVacancyV1Response {
-    VacancyV1 Vacancy = 1;
+    VacancyV1 vacancy = 1;
 }
 
 message ListVacanciesV1Request {
-    uint64 Limit = 1  [(validate.rules).uint64.gte = 0];
-    uint64 Offset = 2  [(validate.rules).uint64.gte = 0];
+    uint64 limit = 1  [(validate.rules).uint64.gte = 0];
+    uint64 offset = 2  [(validate.rules).uint64.gte = 0];
 }
   
 message ListVacanciesV1Response {
-    repeated VacancyV1 Vacancies = 1;
+    repeated VacancyV1 vacancies = 1;
 }
   
 message RemoveVacancyV1Request {
-    uint64 ID = 1 [(validate.rules).uint64.gte = 0];
+    uint64 id = 1 [(validate.rules).uint64.gte = 0];
 }
 
 message RemoveVacancyV1Response {
-    bool Found = 1;
+    bool found = 1;
 }
 

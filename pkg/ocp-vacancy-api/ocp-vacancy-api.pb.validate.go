@@ -40,7 +40,7 @@ func (m *VacancyV1) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ID
+	// no validation rules for Id
 
 	// no validation rules for Link
 
@@ -182,7 +182,7 @@ func (m *CreateVacancyV1Response) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ID
+	// no validation rules for Id
 
 	return nil
 }
@@ -251,7 +251,7 @@ func (m *DescribeVacancyV1Request) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ID
+	// no validation rules for Id
 
 	return nil
 }
@@ -550,7 +550,7 @@ func (m *RemoveVacancyV1Request) Validate() error {
 		return nil
 	}
 
-	// no validation rules for ID
+	// no validation rules for Id
 
 	return nil
 }
