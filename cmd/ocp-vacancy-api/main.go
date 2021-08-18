@@ -38,8 +38,12 @@ func run() error {
 	server := grpc.NewServer()
 	ocp_vacancy_api.RegisterOcpVacancyApiServer(server, api.NewOcpVacancyApi())
 
+	log.Info().
+		Str("address", listener.Addr().String()).
+		Msg("serving gRPC...")
+
 	if err := server.Serve(listener); err != nil {
-		return errors.Wrap(err, "failed to serve GRPC")
+		return errors.Wrap(err, "failed to serve gRPC")
 	}
 
 	return nil
@@ -57,6 +61,10 @@ func runJSON() {
 		log.Panic().
 			Msgf("failed to register API handler from endpoint '%s': %v", grpcServerEndpoint, err)
 	}
+
+	log.Info().
+		Str("address", httpPort).
+		Msg("serving REST...")
 
 	if err := http.ListenAndServe(httpPort, mux); err != nil {
 		log.Panic().
