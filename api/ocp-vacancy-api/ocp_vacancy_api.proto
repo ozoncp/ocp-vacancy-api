@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+import "github.com/envoyproxy/protoc-gen-validate/validate/validate.proto";
+
+package ocp.vacancy.api;
+
+option go_package = "github.com/ozoncp/ocp-vacancy-api/pkg/ocp-vacancy-api;ocp_vacancy_api";
+
+// OcpVacancyApi service to manage Vacancies
+service OcpVacancyApi {
+    // CreateVacancyV1 adds a Vacancy
+    rpc CreateVacancyV1(CreateVacancyV1Request) returns (CreateVacancyV1Response) {
+        option (google.api.http) = {
+            post: "/v1/vacancies"
+            body: "*"
+        };
+    }
+
+    // DescribeVacancyV1 returns a Vacancy by ID
+    rpc DescribeVacancyV1(DescribeVacancyV1Request) returns (DescribeVacancyV1Response) {
+        option (google.api.http) = {
+            get: "/v1/vacancies/{id}"
+        };
+    }
+
+    // ListVacanciesV1 returns all Vacancies
+    rpc ListVacanciesV1(ListVacanciesV1Request) returns (ListVacanciesV1Response) {
+        option (google.api.http) = {
+            get: "/v1/vacancies"
+        };
+    }
+
+    // RemoveVacancyV1 deletes a Vacancy by ID
+    rpc RemoveVacancyV1(RemoveVacancyV1Request) returns (RemoveVacancyV1Response) {
+        option (google.api.http) = {
+            delete: "/v1/vacancies/{id}"
+        };
+    }
+}
+
+message VacancyV1 {
+    uint64 id = 1;
+    string link = 2;
+    uint64 status = 3;
+}
+
+message CreateVacancyV1Request {
+    string link = 1 [(validate.rules).string.uri = true];
+    uint64 status = 2 [(validate.rules).uint64.gte = 0];
+}
+
+message CreateVacancyV1Response {
+    uint64 id = 1;
+}
+
+message DescribeVacancyV1Request {
+    uint64 id = 1 [(validate.rules).uint64.gte = 0];
+}
+
+message DescribeVacancyV1Response {
+    VacancyV1 vacancy = 1;
+}
+
+message ListVacanciesV1Request {
+    uint64 limit = 1  [(validate.rules).uint64.gte = 0];
+    uint64 offset = 2  [(validate.rules).uint64.gte = 0];
+}
+  
+message ListVacanciesV1Response {
+    repeated VacancyV1 vacancies = 1;
+}
+  
+message RemoveVacancyV1Request {
+    uint64 id = 1 [(validate.rules).uint64.gte = 0];
+}
+
+message RemoveVacancyV1Response {
+    bool found = 1;
+}
+
