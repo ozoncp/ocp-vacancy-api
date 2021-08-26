@@ -1,3 +1,28 @@
+.PHONY: start
+start: .compose-build .compose-up .migrate
+
+.PHONY: .compose-build
+.compose-build:
+	docker-compose build
+
+.PHONY: .compose-up
+.compose-up:
+	docker-compose up -d
+
+.PHONY: stop
+stop: .compose-stop
+
+.PHONY: .compose-stop
+.compose-stop:
+	docker-compose stop
+	
+.PHONY: migrate
+migrate: .migrate
+
+.PHONY: .migrate
+.migrate:
+	 goose -dir ./migrations postgres "postgresql://postgres:postgres@localhost:5432/postgres?sslmode=disable" up
+
 .PHONY: build
 build: vendor-proto .generate .build
 
