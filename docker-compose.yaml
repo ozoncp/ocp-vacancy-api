@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    networks:
+      - ocp-vacancy-api-network
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  ocp-vacancy-api:
+    build: .
+    restart: unless-stopped
+    networks:
+      - ocp-vacancy-api-network
+    depends_on:
+      - postgres
+    links:
+      - postgres
+    ports:
+      - "8081:8081" # grpc
+      - "8083:8083" # json
+
+volumes:
+  postgres-data:
+
+networks:
+  ocp-vacancy-api-network:
+    driver: bridge

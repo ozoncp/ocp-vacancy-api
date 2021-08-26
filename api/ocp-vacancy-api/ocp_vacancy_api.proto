@@ -17,6 +17,14 @@ service OcpVacancyApi {
         };
     }
 
+    // UpdateVacancyV1 edits a Vacancy
+    rpc UpdateVacancyV1(UpdateVacancyV1Request) returns (UpdateVacancyV1Response) {
+        option (google.api.http) = {
+            put: "/v1/vacancies/{id}"
+            body: "*"
+        };
+    }
+
     // DescribeVacancyV1 returns a Vacancy by ID
     rpc DescribeVacancyV1(DescribeVacancyV1Request) returns (DescribeVacancyV1Response) {
         option (google.api.http) = {
@@ -52,6 +60,16 @@ message CreateVacancyV1Request {
 
 message CreateVacancyV1Response {
     uint64 id = 1;
+}
+
+message UpdateVacancyV1Request {
+    uint64 id = 1 [(validate.rules).uint64.gte = 0];
+    string link = 2 [(validate.rules).string.uri = true];
+    uint64 status = 3 [(validate.rules).uint64.gte = 0];
+}
+
+message UpdateVacancyV1Response {
+    VacancyV1 vacancy = 1;
 }
 
 message DescribeVacancyV1Request {

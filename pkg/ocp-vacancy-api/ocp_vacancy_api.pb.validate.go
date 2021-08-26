@@ -243,6 +243,156 @@ var _ interface {
 	ErrorName() string
 } = CreateVacancyV1ResponseValidationError{}
 
+// Validate checks the field values on UpdateVacancyV1Request with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateVacancyV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Id
+
+	// no validation rules for Link
+
+	// no validation rules for Status
+
+	return nil
+}
+
+// UpdateVacancyV1RequestValidationError is the validation error returned by
+// UpdateVacancyV1Request.Validate if the designated constraints aren't met.
+type UpdateVacancyV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateVacancyV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateVacancyV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateVacancyV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateVacancyV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateVacancyV1RequestValidationError) ErrorName() string {
+	return "UpdateVacancyV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateVacancyV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateVacancyV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateVacancyV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateVacancyV1RequestValidationError{}
+
+// Validate checks the field values on UpdateVacancyV1Response with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *UpdateVacancyV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	if v, ok := interface{}(m.GetVacancy()).(interface{ Validate() error }); ok {
+		if err := v.Validate(); err != nil {
+			return UpdateVacancyV1ResponseValidationError{
+				field:  "Vacancy",
+				reason: "embedded message failed validation",
+				cause:  err,
+			}
+		}
+	}
+
+	return nil
+}
+
+// UpdateVacancyV1ResponseValidationError is the validation error returned by
+// UpdateVacancyV1Response.Validate if the designated constraints aren't met.
+type UpdateVacancyV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateVacancyV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateVacancyV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateVacancyV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateVacancyV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateVacancyV1ResponseValidationError) ErrorName() string {
+	return "UpdateVacancyV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateVacancyV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateVacancyV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateVacancyV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateVacancyV1ResponseValidationError{}
+
 // Validate checks the field values on DescribeVacancyV1Request with the rules
 // defined in the proto definition for this message. If any rules are
 // violated, an error is returned.
