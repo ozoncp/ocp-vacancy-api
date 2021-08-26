@@ -81,6 +81,39 @@
         ]
       }
     },
+    "/v1/vacancies/multi": {
+      "post": {
+        "summary": "MultiCreateVacanciesV1 adds multiple Vacanies at once",
+        "operationId": "OcpVacancyApi_MultiCreateVacanciesV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiMultiCreateVacanciesV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiMultiCreateVacanciesV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
+      }
+    },
     "/v1/vacancies/{id}": {
       "get": {
         "summary": "DescribeVacancyV1 returns a Vacancy by ID",
@@ -220,6 +253,25 @@
           "items": {
             "$ref": "#/definitions/apiVacancyV1"
           }
+        }
+      }
+    },
+    "apiMultiCreateVacanciesV1Request": {
+      "type": "object",
+      "properties": {
+        "vacancies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/apiVacancyV1"
+          }
+        }
+      }
+    },
+    "apiMultiCreateVacanciesV1Response": {
+      "type": "object",
+      "properties": {
+        "added": {
+          "type": "boolean"
         }
       }
     },

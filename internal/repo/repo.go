@@ -21,19 +21,46 @@ type Repo interface {
 }
 
 type repo struct {
-	db *sqlx.DB
+	db        *sqlx.DB
+	batchSize int
 }
 
-func NewRepo(db *sqlx.DB) Repo {
+func NewRepo(db *sqlx.DB, batchSize int) Repo {
 	return &repo{
-		db: db,
+		db:        db,
+		batchSize: batchSize,
 	}
 }
 
 const vacanciesTable string = "vacancies"
 
 func (r *repo) AddVacancies(ctx context.Context, vacancies []models.Vacancy) error {
-	return errors.New("not implemented")
+	qry := squirrel.
+		Insert(vacanciesTable).
+		Columns("link", "status")
+
+	for _, v := range vacancies {
+		qry = qry.Values(v.Link, v.Status)
+	}
+
+	res, err := qry.
+		PlaceholderFormat(squirrel.Dollar).
+		RunWith(r.db).
+		ExecContext(ctx)
+	if err != nil {
+		return err
+	}
+
+	ra, err := res.RowsAffected()
+	if err != nil {
+		return errors.Wrap(err, "failed to get affected rows")
+	}
+
+	if ra <= 0 {
+		return errors.New("no rows were affected: probably, nothing was inserted")
+	}
+
+	return nil
 }
 
 func (r *repo) CreateVacancy(ctx context.Context, vacancy models.Vacancy) (uint64, error) {

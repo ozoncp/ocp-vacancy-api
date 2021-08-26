@@ -28,6 +28,8 @@ type OcpVacancyApiClient interface {
 	ListVacanciesV1(ctx context.Context, in *ListVacanciesV1Request, opts ...grpc.CallOption) (*ListVacanciesV1Response, error)
 	// RemoveVacancyV1 deletes a Vacancy by ID
 	RemoveVacancyV1(ctx context.Context, in *RemoveVacancyV1Request, opts ...grpc.CallOption) (*RemoveVacancyV1Response, error)
+	// MultiCreateVacanciesV1 adds multiple Vacanies at once
+	MultiCreateVacanciesV1(ctx context.Context, in *MultiCreateVacanciesV1Request, opts ...grpc.CallOption) (*MultiCreateVacanciesV1Response, error)
 }
 
 type ocpVacancyApiClient struct {
@@ -83,6 +85,15 @@ func (c *ocpVacancyApiClient) RemoveVacancyV1(ctx context.Context, in *RemoveVac
 	return out, nil
 }
 
+func (c *ocpVacancyApiClient) MultiCreateVacanciesV1(ctx context.Context, in *MultiCreateVacanciesV1Request, opts ...grpc.CallOption) (*MultiCreateVacanciesV1Response, error) {
+	out := new(MultiCreateVacanciesV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.vacancy.api.OcpVacancyApi/MultiCreateVacanciesV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OcpVacancyApiServer is the server API for OcpVacancyApi service.
 // All implementations must embed UnimplementedOcpVacancyApiServer
 // for forward compatibility
@@ -97,6 +108,8 @@ type OcpVacancyApiServer interface {
 	ListVacanciesV1(context.Context, *ListVacanciesV1Request) (*ListVacanciesV1Response, error)
 	// RemoveVacancyV1 deletes a Vacancy by ID
 	RemoveVacancyV1(context.Context, *RemoveVacancyV1Request) (*RemoveVacancyV1Response, error)
+	// MultiCreateVacanciesV1 adds multiple Vacanies at once
+	MultiCreateVacanciesV1(context.Context, *MultiCreateVacanciesV1Request) (*MultiCreateVacanciesV1Response, error)
 	mustEmbedUnimplementedOcpVacancyApiServer()
 }
 
@@ -118,6 +131,9 @@ func (UnimplementedOcpVacancyApiServer) ListVacanciesV1(context.Context, *ListVa
 }
 func (UnimplementedOcpVacancyApiServer) RemoveVacancyV1(context.Context, *RemoveVacancyV1Request) (*RemoveVacancyV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RemoveVacancyV1 not implemented")
+}
+func (UnimplementedOcpVacancyApiServer) MultiCreateVacanciesV1(context.Context, *MultiCreateVacanciesV1Request) (*MultiCreateVacanciesV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method MultiCreateVacanciesV1 not implemented")
 }
 func (UnimplementedOcpVacancyApiServer) mustEmbedUnimplementedOcpVacancyApiServer() {}
 
@@ -222,6 +238,24 @@ func _OcpVacancyApi_RemoveVacancyV1_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OcpVacancyApi_MultiCreateVacanciesV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MultiCreateVacanciesV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpVacancyApiServer).MultiCreateVacanciesV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp.vacancy.api.OcpVacancyApi/MultiCreateVacanciesV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpVacancyApiServer).MultiCreateVacanciesV1(ctx, req.(*MultiCreateVacanciesV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OcpVacancyApi_ServiceDesc is the grpc.ServiceDesc for OcpVacancyApi service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -248,6 +282,10 @@ var OcpVacancyApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RemoveVacancyV1",
 			Handler:    _OcpVacancyApi_RemoveVacancyV1_Handler,
+		},
+		{
+			MethodName: "MultiCreateVacanciesV1",
+			Handler:    _OcpVacancyApi_MultiCreateVacanciesV1_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
