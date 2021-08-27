@@ -1,6 +1,7 @@
 package saver_test
 
 import (
+	"context"
 	"time"
 
 	"github.com/golang/mock/gomock"
@@ -20,6 +21,8 @@ var _ = Describe("Saver", func() {
 		mockFlusher *mocks.MockFlusher
 
 		s saver.Saver
+
+		ctx context.Context
 	)
 
 	BeforeEach(func() {
@@ -28,6 +31,8 @@ var _ = Describe("Saver", func() {
 		mockFlusher = mocks.NewMockFlusher(ctrl)
 
 		s = saver.NewSaver(10, mockFlusher, 100*time.Millisecond)
+
+		ctx = context.Background()
 	})
 
 	AfterEach(func() {
@@ -37,7 +42,7 @@ var _ = Describe("Saver", func() {
 	Context("When saving a vacancy", func() {
 		It("should call Flush", func() {
 			mockFlusher.EXPECT().
-				Flush(gomock.Any()).
+				Flush(ctx, gomock.Any()).
 				Times(1)
 
 			s.Save(models.Vacancy{})

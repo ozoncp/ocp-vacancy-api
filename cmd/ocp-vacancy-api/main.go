@@ -5,13 +5,17 @@ import (
 	"net"
 	"net/http"
 
+	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/ozoncp/ocp-vacancy-api/internal/api"
+	"github.com/ozoncp/ocp-vacancy-api/internal/repo"
 	ocp_vacancy_api "github.com/ozoncp/ocp-vacancy-api/pkg/ocp-vacancy-api"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc"
+
+	_ "github.com/jackc/pgx/stdlib"
 )
 
 const (
@@ -21,22 +25,29 @@ const (
 )
 
 func main() {
+
 	go runJSON()
 
 	if err := run(); err != nil {
 		log.Fatal().
-			Msgf(err.Error())
+			Err(err)
 	}
 }
 
 func run() error {
+	db, err := sqlx.Connect("pgx", "postgresql://postgres:postgres@localhost:5432/postgres")
+	if err != nil {
+		log.Fatal().
+			Err(err)
+	}
+
 	listener, err := net.Listen("tcp", grpcPort)
 	if err != nil {
 		return errors.Wrapf(err, "failed to start tcp listener on %s", grpcPort)
 	}
 
 	server := grpc.NewServer()
-	ocp_vacancy_api.RegisterOcpVacancyApiServer(server, api.NewOcpVacancyApi())
+	ocp_vacancy_api.RegisterOcpVacancyApiServer(server, api.NewOcpVacancyApi(repo.NewRepo(db)))
 
 	log.Info().
 		Str("address", listener.Addr().String()).

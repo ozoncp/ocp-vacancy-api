@@ -141,6 +141,44 @@
         "tags": [
           "OcpVacancyApi"
         ]
+      },
+      "put": {
+        "summary": "UpdateVacancyV1 edits a Vacancy",
+        "operationId": "OcpVacancyApi_UpdateVacancyV1",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/apiUpdateVacancyV1Response"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/runtimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/apiUpdateVacancyV1Request"
+            }
+          }
+        ],
+        "tags": [
+          "OcpVacancyApi"
+        ]
       }
     }
   },
@@ -190,6 +228,30 @@
       "properties": {
         "found": {
           "type": "boolean"
+        }
+      }
+    },
+    "apiUpdateVacancyV1Request": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "link": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "apiUpdateVacancyV1Response": {
+      "type": "object",
+      "properties": {
+        "vacancy": {
+          "$ref": "#/definitions/apiVacancyV1"
         }
       }
     },

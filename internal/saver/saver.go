@@ -1,6 +1,7 @@
 package saver
 
 import (
+	"context"
 	"sync"
 	"time"
 
@@ -32,10 +33,10 @@ func NewSaver(capacity uint, flusher flusher.Flusher, flushInterval time.Duratio
 		for {
 			select {
 			case <-s.doneCh: // shutdown signal, need to flush storage
-				s.flush()
+				s.flush(context.TODO())
 				return
 			case <-ticker.C: // peroidically call flush
-				s.flush()
+				s.flush(context.TODO())
 			}
 		}
 	}()
@@ -66,11 +67,11 @@ func (s *saver) Close() {
 }
 
 // flush is a helper method to call Saver's Flusher.
-func (s *saver) flush() {
+func (s *saver) flush(ctx context.Context) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 
-	notFlushedVacanices := s.flusher.Flush(s.storage)
+	notFlushedVacanices := s.flusher.Flush(ctx, s.storage)
 	if len(notFlushedVacanices) > 0 {
 		s.storage = notFlushedVacanices
 		// TODO: probably, need to log this case

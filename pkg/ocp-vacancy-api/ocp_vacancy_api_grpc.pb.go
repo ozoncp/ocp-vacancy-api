@@ -20,6 +20,8 @@ const _ = grpc.SupportPackageIsVersion7
 type OcpVacancyApiClient interface {
 	// CreateVacancyV1 adds a Vacancy
 	CreateVacancyV1(ctx context.Context, in *CreateVacancyV1Request, opts ...grpc.CallOption) (*CreateVacancyV1Response, error)
+	// UpdateVacancyV1 edits a Vacancy
+	UpdateVacancyV1(ctx context.Context, in *UpdateVacancyV1Request, opts ...grpc.CallOption) (*UpdateVacancyV1Response, error)
 	// DescribeVacancyV1 returns a Vacancy by ID
 	DescribeVacancyV1(ctx context.Context, in *DescribeVacancyV1Request, opts ...grpc.CallOption) (*DescribeVacancyV1Response, error)
 	// ListVacanciesV1 returns all Vacancies
@@ -39,6 +41,15 @@ func NewOcpVacancyApiClient(cc grpc.ClientConnInterface) OcpVacancyApiClient {
 func (c *ocpVacancyApiClient) CreateVacancyV1(ctx context.Context, in *CreateVacancyV1Request, opts ...grpc.CallOption) (*CreateVacancyV1Response, error) {
 	out := new(CreateVacancyV1Response)
 	err := c.cc.Invoke(ctx, "/ocp.vacancy.api.OcpVacancyApi/CreateVacancyV1", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *ocpVacancyApiClient) UpdateVacancyV1(ctx context.Context, in *UpdateVacancyV1Request, opts ...grpc.CallOption) (*UpdateVacancyV1Response, error) {
+	out := new(UpdateVacancyV1Response)
+	err := c.cc.Invoke(ctx, "/ocp.vacancy.api.OcpVacancyApi/UpdateVacancyV1", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,6 +89,8 @@ func (c *ocpVacancyApiClient) RemoveVacancyV1(ctx context.Context, in *RemoveVac
 type OcpVacancyApiServer interface {
 	// CreateVacancyV1 adds a Vacancy
 	CreateVacancyV1(context.Context, *CreateVacancyV1Request) (*CreateVacancyV1Response, error)
+	// UpdateVacancyV1 edits a Vacancy
+	UpdateVacancyV1(context.Context, *UpdateVacancyV1Request) (*UpdateVacancyV1Response, error)
 	// DescribeVacancyV1 returns a Vacancy by ID
 	DescribeVacancyV1(context.Context, *DescribeVacancyV1Request) (*DescribeVacancyV1Response, error)
 	// ListVacanciesV1 returns all Vacancies
@@ -93,6 +106,9 @@ type UnimplementedOcpVacancyApiServer struct {
 
 func (UnimplementedOcpVacancyApiServer) CreateVacancyV1(context.Context, *CreateVacancyV1Request) (*CreateVacancyV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateVacancyV1 not implemented")
+}
+func (UnimplementedOcpVacancyApiServer) UpdateVacancyV1(context.Context, *UpdateVacancyV1Request) (*UpdateVacancyV1Response, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateVacancyV1 not implemented")
 }
 func (UnimplementedOcpVacancyApiServer) DescribeVacancyV1(context.Context, *DescribeVacancyV1Request) (*DescribeVacancyV1Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeVacancyV1 not implemented")
@@ -130,6 +146,24 @@ func _OcpVacancyApi_CreateVacancyV1_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OcpVacancyApiServer).CreateVacancyV1(ctx, req.(*CreateVacancyV1Request))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OcpVacancyApi_UpdateVacancyV1_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateVacancyV1Request)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OcpVacancyApiServer).UpdateVacancyV1(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ocp.vacancy.api.OcpVacancyApi/UpdateVacancyV1",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OcpVacancyApiServer).UpdateVacancyV1(ctx, req.(*UpdateVacancyV1Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -198,6 +232,10 @@ var OcpVacancyApi_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateVacancyV1",
 			Handler:    _OcpVacancyApi_CreateVacancyV1_Handler,
+		},
+		{
+			MethodName: "UpdateVacancyV1",
+			Handler:    _OcpVacancyApi_UpdateVacancyV1_Handler,
 		},
 		{
 			MethodName: "DescribeVacancyV1",
