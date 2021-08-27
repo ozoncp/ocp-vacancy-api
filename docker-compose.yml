@@ -1,0 +1,92 @@
+version: "3.9"
+
+services:
+  zookeeper:
+    networks:
+      - ocp-vacancy-api-network
+    image: confluentinc/cp-zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      zk_id: "1"
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_SYNC_LIMIT: 2
+    
+    
+  kafka:
+    networks:
+      - ocp-vacancy-api-network
+    image: confluentinc/cp-kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9094:9094
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:32181"
+      KAFKA_LISTENERS: INTERNAL://kafka:9092,OUTSIDE://kafka:9094
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,OUTSIDE://localhost:9094
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  prometheus:
+    networks:
+      - ocp-vacancy-api-network
+    image: prom/prometheus
+    depends_on:
+      - ocp-vacancy-api
+    links:
+      - ocp-vacancy-api
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./prometheus.yml:/etc/prometheus/prometheus.yml"
+
+  jaeger:
+    networks:
+      - ocp-vacancy-api-network
+    image: jaegertracing/all-in-one
+    restart: unless-stopped
+    ports:
+      - 6831:6831/udp
+      - 16686:16686
+    
+  postgres:
+    container_name: "ocp-vacancy-api-pg"
+    networks:
+      - ocp-vacancy-api-network
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  ocp-vacancy-api:
+    networks:
+      - ocp-vacancy-api-network
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - kafka
+    links:
+      - postgres
+    ports:
+      - "8081:8081" # grpc
+      - "8083:8083" # json
+      - "9100:9100" # metrics
+    volumes:
+      - "./config.yml:/root/config.yml"
+
+volumes:
+  postgres-data:
+
+networks:
+  ocp-vacancy-api-network:
+    driver: bridge

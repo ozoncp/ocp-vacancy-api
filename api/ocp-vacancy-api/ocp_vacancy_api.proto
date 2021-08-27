@@ -45,6 +45,14 @@ service OcpVacancyApi {
             delete: "/v1/vacancies/{id}"
         };
     }
+
+    // MultiCreateVacanciesV1 adds multiple Vacanies at once
+    rpc MultiCreateVacanciesV1(MultiCreateVacanciesV1Request) returns (MultiCreateVacanciesV1Response) {
+        option (google.api.http) = {
+          post: "/v1/vacancies/multi"
+          body: "*"
+        };
+      }
 }
 
 message VacancyV1 {
@@ -95,5 +103,13 @@ message RemoveVacancyV1Request {
 
 message RemoveVacancyV1Response {
     bool found = 1;
+}
+
+message MultiCreateVacanciesV1Request {
+    repeated VacancyV1 vacancies = 1 [(validate.rules).repeated.min_items = 1];
+}
+
+message MultiCreateVacanciesV1Response {
+    bool added = 1;
 }
 

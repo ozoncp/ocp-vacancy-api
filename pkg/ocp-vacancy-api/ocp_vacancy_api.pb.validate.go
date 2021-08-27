@@ -829,3 +829,156 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RemoveVacancyV1ResponseValidationError{}
+
+// Validate checks the field values on MultiCreateVacanciesV1Request with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *MultiCreateVacanciesV1Request) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	for idx, item := range m.GetVacancies() {
+		_, _ = idx, item
+
+		if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return MultiCreateVacanciesV1RequestValidationError{
+					field:  fmt.Sprintf("Vacancies[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
+				}
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// MultiCreateVacanciesV1RequestValidationError is the validation error
+// returned by MultiCreateVacanciesV1Request.Validate if the designated
+// constraints aren't met.
+type MultiCreateVacanciesV1RequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MultiCreateVacanciesV1RequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MultiCreateVacanciesV1RequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MultiCreateVacanciesV1RequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MultiCreateVacanciesV1RequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MultiCreateVacanciesV1RequestValidationError) ErrorName() string {
+	return "MultiCreateVacanciesV1RequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e MultiCreateVacanciesV1RequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMultiCreateVacanciesV1Request.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MultiCreateVacanciesV1RequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MultiCreateVacanciesV1RequestValidationError{}
+
+// Validate checks the field values on MultiCreateVacanciesV1Response with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, an error is returned.
+func (m *MultiCreateVacanciesV1Response) Validate() error {
+	if m == nil {
+		return nil
+	}
+
+	// no validation rules for Added
+
+	return nil
+}
+
+// MultiCreateVacanciesV1ResponseValidationError is the validation error
+// returned by MultiCreateVacanciesV1Response.Validate if the designated
+// constraints aren't met.
+type MultiCreateVacanciesV1ResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MultiCreateVacanciesV1ResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MultiCreateVacanciesV1ResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MultiCreateVacanciesV1ResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MultiCreateVacanciesV1ResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MultiCreateVacanciesV1ResponseValidationError) ErrorName() string {
+	return "MultiCreateVacanciesV1ResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e MultiCreateVacanciesV1ResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMultiCreateVacanciesV1Response.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MultiCreateVacanciesV1ResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MultiCreateVacanciesV1ResponseValidationError{}

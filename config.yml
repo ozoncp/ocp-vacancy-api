@@ -1,0 +1,21 @@
+batch_size: 10
+
+grpc:
+  address: ":8081"
+
+rest:
+  address: ":8083"
+
+database:
+  connection_string: "postgresql://postgres:postgres@ocp-vacancy-api-pg:5432/postgres"
+
+kafka:
+  topic: "vacancies"
+  brokers:
+    - "kafka:9092"
+
+prometheus:
+  address: ":9100"
+
+jaeger:
+  address: "jaeger:6831"
